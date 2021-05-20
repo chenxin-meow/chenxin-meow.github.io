@@ -3,7 +3,7 @@
   <title>Lonely Cloud</title>
   <icon>http://chenxin-meow.github.io/images/apple-touch-icon.png</icon>
   
-  <link href="http://chenxin-meow.github.io/feed.xml" rel="self"/>
+  <link href="http://chenxin-meow.github.io/atom.xml" rel="self"/>
   
   <link href="http://chenxin-meow.github.io/"/>
   <updated>2021-05-20T12:37:22.089Z</updated>
