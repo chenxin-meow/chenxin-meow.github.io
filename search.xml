@@ -111,7 +111,7 @@ L(H-L)\leq e^*\leq H(H-L)
 0\leq e^*\leq \lambda L(H-L)
 \]</span> <img src="/images/2021/ill3.png" /></p>
 <p>Note that when <span class="math inline">\(e^*&gt;0\)</span>, we have an <strong>efficiency loss</strong>, just like discussion in the separating equilibrium. But also, if <span class="math inline">\(e^*=0\)</span>, we can reach the only <strong>Pareto efficient</strong> outcome in this setup of asymmetric information.</p>
-<p>In the real world, the education level <span class="math inline">\(e\)</span> may not only refer to the quantity of education (if you are a Bachelor or a Master) but largely depend on the quality of education (if you are from a top university). With an appropriate size of <span class="math inline">\(\lambda\)</span>, high-ability workers always need to distinguish themselves from others, and the only way is to get more education from a top university.</p>
+<p>In the real world, the education level <span class="math inline">\(e\)</span> may not only refer to the quantity of education (if you are a Bachelor or a Master) but largely depend on the quality of education (if you are from a top university or not). With an appropriate size of <span class="math inline">\(\lambda\)</span>, high-ability workers always need to distinguish themselves from others, and the only way is to get more education from a top university.</p>
 <p>This model reveals a sort of astonishing fact: students who spend decades in school may just want to signal themselves as productive rather than actually becoming more productive. People who don't go to school choose to be so because education is too costly for their natural endowments.</p>
 <p>Now, back to our first example of consulting firms again, do you have some new ideas?</p>
 ]]></content>
