@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="OiypVEpaci5m1BZa4S1ovdBvt5wANio9DOx2i8CYboM">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chenxin-meow.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Online learning is all about playing a game.                          These days I am interested in the relationship between online machine learning and game theory. Though I">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Online Learning (1) FTL, Online Gradient Descent">
+<meta property="og:url" content="http://chenxin-meow.github.io/2021/06/06/Online%20Learning%20(1)/index.html">
+<meta property="og:site_name" content="Lonely Cloud">
+<meta property="og:description" content="Online learning is all about playing a game.                          These days I am interested in the relationship between online machine learning and game theory. Though I">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-06T09:01:05.576Z">
+<meta property="article:modified_time" content="2021-06-11T15:44:23.165Z">
+<meta property="article:author" content="Chenxin Jiang">
+<meta property="article:tag" content="Machine Learning">
+<meta property="article:tag" content="Online Learning">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://chenxin-meow.github.io/2021/06/06/Online%20Learning%20(1)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Online Learning (1) FTL, Online Gradient Descent | Lonely Cloud</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Lonely Cloud" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Lonely Cloud</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-chess-pawn fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-hashtag fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://chenxin-meow.github.io/2021/06/06/Online%20Learning%20(1)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.JPG">
+      <meta itemprop="name" content="Chenxin Jiang">
+      <meta itemprop="description" content="I Wandered Lonely as a Cloud.<br>霭霭停云，濛濛时雨。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lonely Cloud">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Online Learning (1) FTL, Online Gradient Descent
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-06-06 17:01:05" itemprop="dateCreated datePublished" datetime="2021-06-06T17:01:05+08:00">2021-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-06-11 23:44:23" itemprop="dateModified" datetime="2021-06-11T23:44:23+08:00">2021-06-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Theory/" itemprop="url" rel="index"><span itemprop="name">Theory</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/06/06/Online%20Learning%20(1)/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/06/06/Online Learning (1)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>9.1k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>8 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote class="blockquote-center">
+            <i class="fa fa-quote-left"></i>
+            <p>Online learning is all about playing a game.</p>
+
+            <i class="fa fa-quote-right"></i>
+          </blockquote>
+<p>These days I am interested in the relationship between online machine learning and game theory. Though I am familiar with the theoretical reduction in game theory, it's more inspiring to see the application of game theory in the area of machine learning. So I am going to record my learning process in <em>Online Learning</em> here.</p>
+<h2 id="a-number-guessing-name">A number guessing name</h2>
+<p>Consider a simple repeated game. In each round <span class="math inline">\(t=1,2,...,T\)</span>:</p>
+<ul>
+<li>your adversary chooses <span class="math inline">\(y_t\in [0,1]\)</span>, and keeps it as a secret</li>
+<li>you guess <span class="math inline">\(x_t\in[0,1]\)</span></li>
+<li>the adversary number is revealed and you pay <span class="math inline">\((x_t-y_t)^2\)</span></li>
+</ul>
+<span id="more"></span>
+<p>Further assume <span class="math inline">\(y_1,...,y_t\ iid\sim F(Y)\)</span>; i.e. your adversary decides the distribution.</p>
+<p>If we do not know the distribution, we pay <span class="math inline">\(\mathbb{E}_Y[\sum_{t=1}^T(x_t-Y)^2]\)</span>.</p>
+<hr />
+<h3 id="minimizing-regret">Minimizing regret</h3>
+<p>For any arbitrary sequence of <span class="math inline">\(y_t\)</span>, define: <span class="math display">\[
+Regret_T:=\sum_{t=1}^T(x_t-y_t)^2-\min_{x\in[0,1]}\sum_{t=1}^T(x-y_t)^2
+\]</span> If it grows sublinear with <span class="math inline">\(T\)</span>, i.e. <span class="math inline">\(Regret_T/T\to 0\)</span> as <span class="math inline">\(T\to \infty\)</span>, then you will win the game.</p>
+<p>A winning strategy in hindsight: <span class="math display">\[
+\begin{aligned}
+x^*_T &amp;=arg\min_{x\in[0,1]}\sum_{t=1}^T(x-y_t)^2\\
+FOC: \frac{\partial}{\partial x}&amp;=\sum_{t=1}^T2(x-y_t)=0\Rightarrow x^*_T=\frac{1}{T}\sum_{t=1}^Ty_t
+\end{aligned}
+\]</span></p>
+<hr />
+<h3 id="follow-the-leader-strategy-ftl">Follow-the-leader Strategy (FTL)</h3>
+<p><strong>Algorithm 1:</strong> Follow-the-leader</p>
+<p>On each round, take <span class="math display">\[
+x_t=x^*_{t-1}=\frac{1}{t-1}\sum_{i=1}^{t-1}y_i
+\]</span></p>
+<hr />
+<p>It's true that we cannot guess the future, but we can always guess over the past. The reason why we propose this strategy is not because the future will be like the past (it won't), but due to the fact that the optimal guess should not change much between rounds.</p>
+<p>However, this is just an intuitive strategy, so we need to prove that the regret on this occasion will coverages sub-linearly.</p>
+<hr />
+<p><strong>Theorem 1</strong>: <span class="math inline">\(Regret_T\)</span> converges sub-linearly under Algo 1.</p>
+<hr />
+<p>Proof.</p>
+<p>Since <span class="math inline">\(\sum_{t=1}^T(x^*_t-y_t)^2\leq\sum_{t=1}^T(x^*_T-y_t)^2\)</span>, we have <span class="math display">\[
+\begin{aligned}
+Regret_T:&amp;=\sum_{t=1}^T(x_t-y_t)^2-\min_{x\in[0,1]}\sum_{t=1}^T(x-y_t)^2\\
+&amp;=\sum_{t=1}^T(x^*_{t-1}-y_t)^2-\sum_{t=1}^T(x^*_T-y_t)^2\\
+&amp;\leq\sum_{t=1}^T(x^*_{t-1}-y_t)^2-\sum_{t=1}^T(x^*_t-y_t)^2\\
+\end{aligned}
+\]</span> Each term <span class="math display">\[
+\begin{aligned}
+(x^*_{t-1}-y_t)^2-(x^*_t-y_t)^2 &amp; \leq |x^*_{t-1}+x^*_t-2y_t||x^*_{t-1}-x^*_t|\\
+&amp; \leq 2|x^*_{t-1}-x^*_t|\\
+&amp;=2|(\frac{1}{t-1}-\frac{1}{t})\sum_{i=1}^{t-1}y_i-\frac{y_t}{t}|\\
+&amp; \leq 2(\frac{1}{t}+\frac{|y_t|}{t})\\
+&amp; \leq \frac{4}{t}
+\end{aligned}
+\]</span></p>
+<p>Sum up to get: <span class="math display">\[
+Regret_T\leq\sum_{t=1}^T\frac{4}{t}\leq 4+4\ lnT
+\]</span></p>
+<p>Formally, it's time for us to a concept: online convex programming.</p>
+<hr />
+<h2 id="online-convex-programming">Online convex programming</h2>
+<p>We consider an <strong>online convex programming problem</strong>:</p>
+<ul>
+<li>a feasible set <span class="math inline">\(F\)</span></li>
+<li>an infinite sequence <span class="math inline">\(\{c^1,c^2,...\}\)</span>, where each <span class="math inline">\(c^t:F\to \mathbb{R}\)</span> is a convex function.</li>
+<li>At each time <span class="math inline">\(t\)</span>, select a vector <span class="math inline">\(x^t\in F\)</span>, and receive the cost <span class="math inline">\(c(x^t)\)</span></li>
+</ul>
+<p><strong>Assumptions</strong>:</p>
+<ol type="1">
+<li>The feasible set <span class="math inline">\(F\)</span> is <strong>bounded</strong>. There exists <span class="math inline">\(N\in \mathbb{R}\)</span> s.t. for all <span class="math inline">\(x,y\in F\)</span>, <span class="math inline">\(d(x,y)\leq N\)</span>.</li>
+<li>The feasible set <span class="math inline">\(F\)</span> is <strong>closed</strong>. For all sequences <span class="math inline">\(\{x^1,x^2,...\}\)</span>, where$ x^tF $ for all <span class="math inline">\(t\)</span>, if there exists a <span class="math inline">\(x\in \mathbb{R}^n\)</span> s.t. <span class="math inline">\(x=\lim_{t\to \infty}x^t\)</span>, then <span class="math inline">\(x\in F\)</span>.</li>
+<li>The feasible set <span class="math inline">\(F\)</span> is <strong>nonempty</strong>. There exists an <span class="math inline">\(x\in F\)</span>.</li>
+<li>For all <span class="math inline">\(t\)</span>, <span class="math inline">\(c^t\)</span> is differentiable. (this assumption can be weakened into the condition of sub-differentiable.)</li>
+<li>There exists an <span class="math inline">\(N\in \mathbb{R}\)</span> s.t. for all <span class="math inline">\(t\)</span>, for all <span class="math inline">\(x\in F\)</span>, <span class="math inline">\(||\nabla c^t(x)||\leq N\)</span>.</li>
+<li>For all <span class="math inline">\(t\)</span>, there exists an algorithm, given <span class="math inline">\(x\)</span>, which produces <span class="math inline">\(\nabla c^t(x)\)</span>.</li>
+<li>For all <span class="math inline">\(y\in \mathbb{R}^n\)</span>, there exists an algorithm which produces <span class="math inline">\(arg\min_{x\in F}d(x,y)\)</span>. We define the <strong>projection</strong> <span class="math inline">\(P(y)=arg\min_{x\in F}d(x,y)\)</span>.</li>
+</ol>
+<p>Consider an <strong>offline algorithm</strong>:</p>
+<ul>
+<li>has access to first <span class="math inline">\(T\)</span> cost functions at start</li>
+<li>can only produce one vector <span class="math inline">\(x\in F\)</span> (a static feasible solution)</li>
+<li>attempts to <span class="math inline">\(\min_{x\in F}c_x(x)=\sum_{i=1}^Tc^i(x)\)</span></li>
+</ul>
+<hr />
+<p><strong>Definition 1</strong>. For an online algorithim <span class="math inline">\(A\)</span>,</p>
+<ul>
+<li><p>the <em>cost</em> of <span class="math inline">\(A\)</span> until <span class="math inline">\(T\)</span> is <span class="math inline">\(c_A(T)=\sum_{t=1}^{T}c^t(x^t)\)</span></p></li>
+<li><p>the <em>regret</em> of <span class="math inline">\(A\)</span> until <span class="math inline">\(T\)</span> is <span class="math inline">\(R_A(T)=c_A(T)-\min_{x\in F}c_x(T)\)</span></p></li>
+</ul>
+<p><span class="math inline">\(A\)</span> works if <span class="math display">\[
+\lim_{T\to \infty}\sup R_A(T)/T=0
+\]</span></p>
+<hr />
+<h3 id="online-gradient-descent">Online Gradient Descent</h3>
+<p><strong>Algorithm 2</strong>. Greedy Projection</p>
+<p>Initilization:</p>
+<ul>
+<li><span class="math inline">\(x^1\in F\)</span></li>
+<li>a sequence of learning rate <span class="math inline">\(\eta_1,\eta_2,...\)</span></li>
+</ul>
+<p>In time step <span class="math inline">\(t\)</span>:</p>
+<ul>
+<li>Output <span class="math inline">\(x^t\in F\)</span></li>
+<li>Receive a cost function <span class="math inline">\(c^t(x^t)\)</span></li>
+<li>Select next <span class="math inline">\(x^{t+1}=P(x^t-\eta_t\nabla c^t(x^t))\)</span></li>
+</ul>
+<hr />
+<p>Define <span class="math display">\[
+||F||=\max_{x,y\in F}d(x,y)\\
+||\nabla c||=\max_{x\in F,t\in\{1,2,...\}}||\nabla c^t(x)||
+\]</span></p>
+<hr />
+<p><strong>Theorem 2</strong>. If <span class="math inline">\(\eta_t=\frac{1}{\sqrt t}\)</span>, the regret bound for the Greedy Projection Algorithm is <span class="math display">\[
+R_G(T)\leq\frac{||F||^2\sqrt T}{2}+(\sqrt T-\frac{1}{2})||\nabla c||^2
+\]</span></p>
+<hr />
+<p><strong>Proof.</strong></p>
+<ol type="1">
+<li><p>Find a linear cost function.</p>
+<p>WLOG, for any <span class="math inline">\(t\)</span>, there exists a <span class="math inline">\(g^t\in \mathbb{R}^n\)</span> s.t. for any <span class="math inline">\(x\)</span>, <span class="math inline">\(c^t(x)=g^t\cdot x\)</span>.</p>
+<p>Define <span class="math inline">\(g^t=\nabla c^t(x^t)\)</span>.</p>
+<p>If we were to change <span class="math inline">\(c^t\)</span> such that <span class="math inline">\(c^t(x)=g^t\cdot x\)</span>, then the behaviour of the algorithm will be the same, as <span class="math display">\[
+x^{t+1}=P(x^t-\eta_t\nabla c^t(x^t))=P(x^t-\eta_tg^t)
+\]</span> Moreover, the regret of the algorithm will be the same.</p>
+<p>Since <span class="math inline">\(c^t\)</span> is convex, for any <span class="math inline">\(x\)</span>: <span class="math inline">\(c^t(x)\geq\nabla c^t(x^t)\cdot(x-x^t)+c^t(x^t)\)</span>.</p>
+<p>Set <span class="math inline">\(x^*=\arg\min_{x\in F}c^t(x)\)</span>, then <span class="math display">\[
+c^t(x^*)\geq\nabla c^t(x^t)\cdot(x^*-x^t)+c^t(x^t)\\
+\Rightarrow c^t(x^t)-c^t(x^*)\leq g^t\cdot x^t-g^t\cdot x^*
+\]</span></p></li>
+<li><p>Bound the regret on round <span class="math inline">\(t\)</span>.</p>
+<p>Define for any <span class="math inline">\(t\)</span>, <span class="math inline">\(y^{t+1}:=x^t-\eta_tg^t\)</span>.</p>
+<p>Then <span class="math inline">\(x^{t+1}=P(y^{t+1})\)</span>, and <span class="math display">\[
+y^{t+1}-x^*=(x^t-x^*)-\eta_t g^t
+\]</span> <strong>Lemma.</strong> For any <span class="math inline">\(y\in \mathbb{R}^n\)</span>, any <span class="math inline">\(x\in F\)</span>: <span class="math inline">\((y-x)^2\geq(P(y)-x)^2\)</span>.</p>
+<p>Also, <span class="math inline">\(||g^t||\leq ||\nabla c||\)</span>, so <span class="math display">\[
+(x^{t+1}-x^*)^2\leq(x^t-x^*)^2-2\eta_t(x^t-x^*)g^t+\eta_t^2||\nabla c||^2\\
+\Rightarrow (x^t-x^*)g^t\leq\frac{1}{2\eta_t}[(x^t-x^*)^2-(x^{t+1}-x^*)^2]+\frac{\eta_t}{2}||\nabla c||^2
+\]</span></p></li>
+<li><p>Sum up to get <span class="math inline">\(R_G(T)\)</span>. <span class="math display">\[
+\begin{aligned}
+R_G(T)&amp;=\sum_{t=1}^T(x^t-x^*)g^t\\
+&amp;\leq \sum_{t=1}^T \frac{1}{2\eta_t}[(x^t-x^*)^2-(x^{t+1}-x^*)^2]+\frac{\eta_t}{2}||\nabla c||^2\\
+&amp;\leq \frac{1}{2\eta_1}(x^1-x^*)^2-\frac{1}{2\eta_T}(x^{T+1}-x^*)^2+\frac{1}{2}\sum_{t=2}^T(\frac{1}{\eta_t}-\frac{1}{\eta_{t-1}})(x^t-x^*)^2+\frac{||\nabla c||^2}{2}\sum_{t=1}^T\eta_t\\
+&amp;\leq ||F||^2(\frac{1}{2\eta_1}+\frac{1}{2}\sum_{t=2}^T(\frac{1}{\eta_t}-\frac{1}{\eta_{t-1}}))+\frac{||\nabla c||^2}{2}\sum_{t=1}^T\eta_t\\
+&amp;\leq ||F||^2\frac{1}{2\eta_T}+\frac{||\nabla c||^2}{2}\sum_{t=1}^T\eta_t
+\end{aligned}
+\]</span></p></li>
+<li><p>Define <span class="math inline">\(\eta_t=\frac{1}{\sqrt t}\)</span>.</p>
+<p>Since <span class="math inline">\(\sum_{t=1}^T\eta_t=\sum_{t=1}^T\frac{1}{\sqrt t}\leq1+\int_{t=1}^T\frac{dt}{\sqrt t}\leq 2\sqrt T-1\)</span>, we have <span class="math display">\[
+\begin{aligned}
+R_G(T)&amp;\leq \frac{||F||^2}{2}\sqrt T+\frac{||\nabla c||^2}{2}(2\sqrt T-1)\\
+&amp;\leq \frac{||F||^2+2||\nabla c||^2}{2}\sqrt T
+\end{aligned}
+\]</span></p>
+<p>The above regret grows sub-linearly with <span class="math inline">\(\mathcal{O(\sqrt{T})}\)</span>.</p></li>
+</ol>
+<hr />
+<p><strong>Notice</strong>:</p>
+<ol type="1">
+<li>In Algo2, gradient <span class="math inline">\(\nabla c\)</span> can be changed to subgradien <span class="math inline">\(\partial c\)</span>, so the cost function need not to be differentiable.</li>
+<li>We can also choose a constant step size, for example,</li>
+</ol>
+<p><span class="math display">\[
+\eta=\eta^*=\frac{||F||}{||\nabla c||\sqrt{T}}
+\]</span> Then we have <span class="math display">\[
+\begin{aligned}
+R_G(T)&amp;\leq ||F||^2\frac{1}{2\eta_T}+\frac{||\nabla c||^2}{2}\sum_{t=1}^T\eta_t\\
+&amp;=||F||||\nabla c||\sqrt{T}
+\end{aligned}
+\]</span> The above regret also grows sub-linearly with <span class="math inline">\(\mathcal{O(\sqrt{T})}\)</span>.</p>
+<hr />
+<p><strong>Example</strong> (Number guessing game with OGD)</p>
+<ul>
+<li><span class="math inline">\(c^t(x^t)=(x^t-y^t)^2\)</span>, so <span class="math inline">\(g^t=\nabla c^t(x^t)=2(x^t-y^t)\)</span>, which is bounded on <span class="math inline">\([0,1]\)</span>.</li>
+<li>Projection on <span class="math inline">\([0,1]\)</span>: <span class="math inline">\(P_{[0,1]}(x^t)=\min(\max(x,0),1)\)</span></li>
+<li>With learning rate <span class="math inline">\(\eta_t=\frac{1}{\sqrt t}\)</span>, we can obtain an OGD with regret <span class="math inline">\(\sim\mathcal{O}(\sqrt T)\)</span>.</li>
+</ul>
+<p>We suddenly discover that the regret bound is even worse than the simplest one -- Follow-the-leader strategy we propose at the beginning. However, we can actually do better under the setting of OGD.</p>
+<hr />
+<h3 id="better-than-mathcalosqrtt">Better than <span class="math inline">\(\mathcal{O(\sqrt{T})}\)</span></h3>
+<p>Now we come to consider a question: can we do better than <span class="math inline">\(\mathcal{O(\sqrt{T})}\)</span>? The answer is yes, yet we need more assumptions on the loss functions. Beyond the convexity requirement on the loss function class, we further require "strong convexity" for better performance.</p>
+<p><strong>Definition 2</strong>. Let <span class="math inline">\(\mu\geq0\)</span>. A proper function <span class="math inline">\(f:\mathbb{R}^d\to(-\infty,\infty]\)</span> is <strong><span class="math inline">\(\mu\)</span>-strongly convex</strong> over a convex set <span class="math inline">\(V \subseteq int\ dom\ f\)</span> w.r.t. <span class="math inline">\(||\cdot||\)</span> if <span class="math display">\[
+\forall x,y\in V,\forall g \in \partial f(x):\
+f(y)\geq f(x)+&lt;g,y-x&gt;+\frac{\mu}{2}||x-y||^2
+\]</span></p>
+<hr />
+<p><strong>Theorem 3</strong>. If the loss functions <span class="math inline">\(c^t:F\to \mathbb{R}\)</span> are <span class="math inline">\(\mu_t\)</span>-strongly convex over a convex set <span class="math inline">\(\cap_{i=1}^T V \subseteq int\ dom\ l_i\)</span> w.r.t. <span class="math inline">\(||\cdot||\)</span> , with the OGD step size <span class="math display">\[
+\eta_t=\frac{1}{\sum_{i=1}^t\mu_i}
+\]</span> Then the regret bound can be written as <span class="math display">\[
+R_{G&#39;}(T)\leq \frac{1}{2}\sum_{t=1}^T\eta_t||g^t||^2
+\]</span> If we additionally assume <span class="math inline">\(\mu_t=\mu\geq 0\)</span> and <span class="math inline">\(c^t\)</span> is <strong>L-Lipschitz</strong> w.r.t. <span class="math inline">\(||\cdot||\)</span> for <span class="math inline">\(t=1,...,T\)</span>, then <span class="math display">\[
+R_{G&#39;}(T)\leq \frac{L^2}{2\mu}(1+lnT)
+\]</span></p>
+<hr />
+<p>Proof.</p>
+<p>In time step <span class="math inline">\(t\)</span>, <span class="math display">\[
+c^t(x^t)-c(x^*)\leq \langle g^t,x^t-x^*\rangle-\frac{\mu_t}{2}||x^t-x^*||^2
+\]</span> Sum up, <span class="math display">\[
+\begin{aligned}
+R_{G&#39;}(T)&amp;=\sum_{t=1}^Tc^t(x^t)-c(x^*)\\
+&amp;\leq \sum_{t=1}^T \frac{1}{2\eta_t}[(x^t-x^*)^2-(x^{t+1}-x^*)^2]+\frac{\eta_t}{2}||g^t||^2-\sum_{t=1}^T\frac{\mu_t}{2}(x^t-x^*)^2\\
+&amp;= -\frac{1}{2\eta_1}(x^2-x^*)^2+\frac{1}{2}\sum_{t=2}^T(\frac{1}{\eta_{t-1}}(x^{t}-x^*)^2-\frac{1}{\eta_{t}}(x^{t+1}-x^*)^2)+\sum_{t=1}^T\frac{\eta_t}{2}||g^t||^2\\
+&amp;\leq \sum_{t=1}^T\frac{\eta_t}{2}||g^t||^2
+\end{aligned}
+\]</span> If <span class="math inline">\(\mu_t=\mu\geq 0\)</span> and <span class="math inline">\(c^t\)</span> is <strong>L-Lipschitz</strong>, then <span class="math display">\[
+R_{G&#39;}\leq \frac{L^2}{2}\sum_{t=1}^T\frac{1}{t\mu}\leq \frac{L^2}{2\mu}(1+lnT)
+\]</span> Finally, we derive a better regret bound <span class="math inline">\(\sim\mathcal{O}(lnT)\)</span>.</p>
+<hr />
+<p><strong>Example</strong> (Number guessing game with OGD, again)</p>
+<p>Since the cost function <span class="math inline">\(c^t(x)=(x-y^t)^2\)</span> is actually <span class="math inline">\(2\)</span>-strongly convex w.r.t. <span class="math inline">\(||\cdot||\)</span>, the performance of OGB can be improved. If we set <span class="math display">\[
+\eta_t=\frac{1}{\sum_{i=1}^t\mu_i}=\frac{1}{2}
+\]</span> Then <span class="math inline">\(\nabla c^t(x)=2(x-y^t)\)</span> gives a regret <span class="math inline">\(\sim\mathcal{O}(lnT)\)</span>.</p>
+<hr />
+<p><strong>References</strong>:</p>
+<p>[1] Martin Zinkevich. Online convex programming and generalized infinitesimal gradient ascent. In ICML, 2003.</p>
+<p>[2] Francesco Orabona. A Modern Introduction to Online Learning. <strong><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1912.13213">arXiv:1912.13213</a></strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Machine-Learning/" rel="tag"><i class="fa fa-tag"></i> Machine Learning</a>
+              <a href="/tags/Online-Learning/" rel="tag"><i class="fa fa-tag"></i> Online Learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/26/Paradise%20Lost/" rel="prev" title="文明的失乐园——论人类不平等的起源和基础">
+      <i class="fa fa-chevron-left"></i> 文明的失乐园——论人类不平等的起源和基础
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#a-number-guessing-name"><span class="nav-number">1.</span> <span class="nav-text">A number guessing name</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#minimizing-regret"><span class="nav-number">1.1.</span> <span class="nav-text">Minimizing regret</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#follow-the-leader-strategy-ftl"><span class="nav-number">1.2.</span> <span class="nav-text">Follow-the-leader Strategy (FTL)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#online-convex-programming"><span class="nav-number">2.</span> <span class="nav-text">Online convex programming</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#online-gradient-descent"><span class="nav-number">2.1.</span> <span class="nav-text">Online Gradient Descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#better-than-mathcalosqrtt"><span class="nav-number">2.2.</span> <span class="nav-text">Better than \(\mathcal{O(\sqrt{T})}\)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chenxin Jiang"
+      src="/images/avatar.JPG">
+  <p class="site-author-name" itemprop="name">Chenxin Jiang</p>
+  <div class="site-description" itemprop="description">I Wandered Lonely as a Cloud.<br>霭霭停云，濛濛时雨。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:jiangchenxin0207@gmail.com" title="E-Mail → mailto:jiangchenxin0207@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fas fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chenxin Jiang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="Symbols count total">26k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">23 mins.</span>
+</div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60a54da67c98630c" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://chenxin-meow.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://chenxin-meow.github.io/2021/06/06/Online%20Learning%20(1)/";
+    this.page.identifier = "2021/06/06/Online Learning (1)/";
+    this.page.title = "Online Learning (1) FTL, Online Gradient Descent";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chenxin-meow.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+    </div>
+</body>
+</html>
