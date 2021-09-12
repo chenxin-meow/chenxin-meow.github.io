@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="OiypVEpaci5m1BZa4S1ovdBvt5wANio9DOx2i8CYboM">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"chenxin-meow.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="It&#39;s widely accepted to measure economic growth by &quot;change in GDP per capita&quot;. If we focus on the production side of the economy, the definition of GDP should be how much the domestic economy produces">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A glance at Solow Model of Economic Growth">
+<meta property="og:url" content="http://chenxin-meow.github.io/2021/09/07/solow-growth/index.html">
+<meta property="og:site_name" content="Lonely Cloud">
+<meta property="og:description" content="It&#39;s widely accepted to measure economic growth by &quot;change in GDP per capita&quot;. If we focus on the production side of the economy, the definition of GDP should be how much the domestic economy produces">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109122303637.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109082303226.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109122303288.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109122304894.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109122302745.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109130044347.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109130045655.png">
+<meta property="article:published_time" content="2021-09-07T15:32:23.708Z">
+<meta property="article:modified_time" content="2021-09-12T16:45:33.991Z">
+<meta property="article:author" content="Chenxin Jiang">
+<meta property="article:tag" content="Economics">
+<meta property="article:tag" content="Macroeconomics">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109122303637.png">
+
+<link rel="canonical" href="http://chenxin-meow.github.io/2021/09/07/solow-growth/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>A glance at Solow Model of Economic Growth | Lonely Cloud</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Lonely Cloud" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Lonely Cloud</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-chess-pawn fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-hashtag fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://chenxin-meow.github.io/2021/09/07/solow-growth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.JPG">
+      <meta itemprop="name" content="Chenxin Jiang">
+      <meta itemprop="description" content="I Wandered Lonely as a Cloud.<br>霭霭停云，濛濛时雨。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lonely Cloud">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          A glance at Solow Model of Economic Growth
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-07 23:32:23" itemprop="dateCreated datePublished" datetime="2021-09-07T23:32:23+08:00">2021-09-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-13 00:45:33" itemprop="dateModified" datetime="2021-09-13T00:45:33+08:00">2021-09-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Theory/" itemprop="url" rel="index"><span itemprop="name">Theory</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+              <span>10 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>It's widely accepted to measure economic growth by "change in GDP per capita". If we focus on the production side of the economy, the definition of GDP should be <em>how much the domestic economy produces in a year</em>. Admittedly, GDP per capita ignores many aspects of the whole economy within a country (e.g. the black economy, home production, value of various services, etc.), so there are various alternative measures for economic growth, such as the Human Development Index in UN and Index of Economic Well-being in Canada. GDP per capita, however, is still the most widely accepted index to evaluate the level of economic growth. Before we start to analyze the economic growth via GDP, we here to establish a general context of <strong>classical macroeconomics</strong>.</p>
+<h2 id="setup-of-classical-macroeconomics">Setup of Classical Macroeconomics</h2>
+<p>Given three critical assumptions:</p>
+<ol type="1">
+<li>Market clearing</li>
+<li>Fixed capital stock at a point in time</li>
+<li>Full employment at a point in time</li>
+</ol>
+<p>We are interested in both the production and expenditure side of the economy.</p>
+<p>Looking into the production side, we want to construct a production function that uses some inputs (capital, labor) to produce some output (goods, services). The formulation of production function is <span class="math display">\[
+Y=F(K,L)
+\]</span></p>
+<p>where Y is the final output and K, L are capital and labor respectively. And F represents the available technology for turning the given capital and labor into output.</p>
+<p>There are several assumptions on F :</p>
+<ol type="1">
+<li>Positive marginal products, i.e. <span class="math inline">\(F_K&gt;0, F_L&gt;0\)</span>.</li>
+<li>Marginal products decrease as labor or capital increases, i.e. <span class="math inline">\(F_{LL}&lt;0, F_{KK}&lt;0\)</span>.</li>
+<li>Constant returns to scale technology, i.e. <span class="math inline">\(\lambda F(K,L)=F(\lambda K,\lambda L)\)</span>.</li>
+</ol>
+<p>Since we assume the capital and labor are fixed, we have <span class="math display">\[
+Y=F(\bar K, \bar L)=\bar Y
+\]</span></p>
+<p><strong>Key:</strong> In classical macroeconomics, the output is determined by the level of capital and labor stocks in employment.</p>
+<p>Now we turn to the expenditure side of the economy. The expenditure on domestic goods can be decomposed into several parts: <span class="math display">\[
+E=C+I+G+(X-M)
+\]</span> where</p>
+<ul>
+<li><span class="math inline">\(C=C(Y-T)\)</span> is the consumption,</li>
+<li><span class="math inline">\(I=I(r)\)</span> is the Investment,</li>
+<li><span class="math inline">\(G\)</span> is the Government spending,</li>
+<li><span class="math inline">\(X\)</span> and <span class="math inline">\(M\)</span> are Exports and Imports respectively.</li>
+</ul>
+<p>Given the definitions above, the general equilibrium in classical macroeconomics can be written as <span class="math display">\[
+\bar Y=E=C+I+G+(X-M)
+\]</span></p>
+<p>In other words, it is <strong>Production = Expenditure</strong>.</p>
+<p>Under the world of classical macroeconomics, we are going to analyze the economic growth by GDP per capita ( <span class="math inline">\(Y/N\)</span> ) now.</p>
+<span id="more"></span>
+<p>Note that the international data averaging over a long period of time suggests that</p>
+<ol type="1">
+<li>Income per unit capital ( <span class="math inline">\(Y/K\)</span>) does not change.</li>
+<li>Income per capita ( <span class="math inline">\(Y/N\)</span> ) and capital per capita ( <span class="math inline">\(K/N\)</span> ) grows at constant rates.</li>
+<li>Rental price of capital ( <span class="math inline">\(r\)</span> ) is constant.</li>
+<li>Wages ( <span class="math inline">\(w\)</span> ) grows at a constant rate.</li>
+<li>Rates of growth and level of income vary substantially across countries (non-convergence).</li>
+</ol>
+<p>We also call the above five components <em>Kaldor's Stylized Facts of Economic Growth</em>.</p>
+<p>Our task is to develop a model on economic growth which can interpret these facts. In this article, I am going to talk about an exogenous growth model, <strong>Solow Growth Model</strong>, which can be separated into three models, the basic Solow Growth Model, Solow Growth Model with population growth, Solow Growth Model with technology.</p>
+<h2 id="basic-solow-growth-model">Basic Solow Growth Model</h2>
+<p>Considering 5 assumptions:</p>
+<p><strong>A1:</strong> Multi-periods.</p>
+<p><strong>A2:</strong> The production function has a constant returns to scale (CRTS) technology.</p>
+<p>For the production function <span class="math inline">\(Y=F(K,N)\)</span>​, on per-capita basis (letting <span class="math inline">\(y=Y/N,k=K/N\)</span>), we have <span class="math display">\[
+y=\frac{Y}{N}=F(\frac{K}{N},1)=f(k)
+\]</span> <strong>A3:</strong> No government and no international trade.</p>
+<p>Recall that</p>
+<ul>
+<li>Production = Expenditure, i.e. <span class="math inline">\(Y=C+I+G+(X-M)\)</span></li>
+<li>Disposable Income = Consumption + Savings, i.e. <span class="math inline">\(Y-T=C+S\)</span></li>
+</ul>
+<p>We derive that <span class="math inline">\(S-I=(G-T)+(X-M)\)</span>, which is an important equation implying <em>Twin Deficits</em> in an economy.</p>
+<p>Under the <strong>A3</strong> assumption, <span class="math inline">\(S=I\)</span>​​. Consumers save a fraction ( <span class="math inline">\(s\)</span>: saving rate ) of their income: <span class="math display">\[
+S=sY=I,\ C=(1-s)Y
+\]</span> On per-capita basis, <span class="math display">\[
+sf(k)=i,\ c=(1-s)f(k)
+\]</span></p>
+<p><strong>A4:</strong> All factors of production are fully employed (no unemployment; no capital lies idle).</p>
+<p><strong>A5:</strong> Capital stock <span class="math inline">\(K\)</span> can increase because of investment and decrease because of depreciation.</p>
+<p>Let <span class="math inline">\(d\)</span> be the rate of depreciation, <span class="math inline">\(K, K^{&#39;}\)</span>​​ be the capital stock in the current and next period. Then <span class="math display">\[
+K&#39;=(1-d)K+sY
+\]</span> In per-capita form ( assume <span class="math inline">\(N=N&#39;\)</span>​ ), <span class="math display">\[
+k&#39;=(1-d)k+sy\Rightarrow k&#39;=k+[sf(k)-dk]
+\]</span> In long-run equilibrium, all investments are used to replace depreciated capital, so the capital per capita, <span class="math inline">\(k\)</span>​, should not change, i.e. <span class="math inline">\(k^*=k=k&#39;\)</span>: <span class="math display">\[
+sf(k^*)=dk^*
+\]</span> <img src="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109122303637.png" alt="Equilibrium of the basic Solow Model" /></p>
+<p>The basic Solow Model indeed can explain some economic phenomena in the real world. Analyzing the graph, a higher savings rate (hence higher investment) would imply a higher income per capita, which is consistent with the reality. On the other hand, a higher depreciation rate leads to lower income per capita.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109082303226.png" alt="Increase in savings rate from s1 to s2" /><figcaption aria-hidden="true">Increase in savings rate from s1 to s2</figcaption>
+</figure>
+<figure>
+<img src="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109122303288.png" alt="Increase in savings rate from s1 to s2" /><figcaption aria-hidden="true">Increase in savings rate from s1 to s2</figcaption>
+</figure>
+<figure>
+<img src="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109122304894.png" alt="Increase in depreciation rate from d1 to d2" /><figcaption aria-hidden="true">Increase in depreciation rate from d1 to d2</figcaption>
+</figure>
+<p>Since <span class="math inline">\(y\)</span>​​​ only depends on <span class="math inline">\(k\)</span>​​​ ( <span class="math inline">\(y=f(k)\)</span>​​​ ), <span class="math inline">\(y\)</span>​​​ does not change in long-run equilibrium as well. This is the major problem of the basic Solow Growth Model -- it contradicts the 2nd Kaldor's Stylized Fact ( <span class="math inline">\(y,k\)</span>​​​ grow at constant rates). In Solow's world, growth occurs only during adjustment to the steady rate. Nevertheless, it is still a starting point for thet analysis of economic growth. With the establishment of the basic Solow Model, we can now turn to two variational Solow Model, with population or technology growth added.</p>
+<h2 id="solow-growth-model-with-population-growth">Solow Growth Model with Population Growth</h2>
+<p>We have already known, in the equilibrium, capital per capita <span class="math inline">\(k\)</span>​​​ would reach a steady rate <span class="math inline">\(k=k&#39;=k^*\)</span>​​​. If we care about the growth rate of <span class="math inline">\(k\)</span>​​, <span class="math inline">\(\frac{k&#39;-k}{k}\)</span>​​ should equal 0. More concisely, by the definition of <span class="math inline">\(k\)</span>​​​, we have <span class="math display">\[
+\begin{aligned}
+k=\frac{K}{N}&amp;\Rightarrow lnk=lnK-lnN\\
+&amp;\Rightarrow \frac{1}{k}\frac{dk}{dt}=\frac{1}{K}\frac{dK}{dt}-\frac{1}{N}\frac{dN}{dt}\\
+&amp;\Rightarrow \frac{k&#39;-k}{k}\approx \frac{K&#39;-K}{K}-\frac{N&#39;-N}{N}
+\end{aligned}
+\]</span> Intuitively, when the population grows, the economy requires more capital in order to grow (compared to the situation that the population remains the same).</p>
+<p>Denote <span class="math display">\[
+\frac{N&#39;-N}{N}:=n
+\]</span></p>
+<p>In previous section, we have already derived <span class="math display">\[
+K&#39;=(1-d)K+sY
+\]</span> Hence, <span class="math display">\[
+\begin{aligned}
+\frac{k&#39;-k}{k}&amp;= \frac{sY-dK}{K}-n\\
+\Rightarrow k&#39;-k&amp;=sf(k)-(n+d)k
+\end{aligned}
+\]</span> The last formula is known as <em>Capital Evolution Equation</em>, indicating that for the level of capital stock to grow, investments have to compensate both the extra population and the depreciation of capital.</p>
+<p>Again, if we analyze the equilibrium where the capital grows at a steady rate <span class="math inline">\(k=k&#39;=k^{*}\)</span>: <span class="math display">\[
+sf(k^*)=(n+d)k^*
+\]</span> <img src="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109122302745.png" alt="Equilibrium of Solow Model with population growth" /></p>
+<p>Consider a real-world application: From the graph, a higher population growth rate (<span class="math inline">\(n_1\to n_2\)</span>​​​​​ ) will cause capital per person to fall (<span class="math inline">\(k_1 \to k_3\)</span>​​), hence result in lower GDP per person as <span class="math inline">\(y=f(k)\)</span>​​​​.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109130044347.png" alt="Increase in population growth rate from n1 to n2" /><figcaption aria-hidden="true">Increase in population growth rate from n1 to n2</figcaption>
+</figure>
+<p>How does Solow Growth Model with population growth perform?</p>
+<p>On one hand, <em>total output and capital stock grow at the same rate as population growth</em> since <span class="math display">\[
+\frac{k&#39;-k}{k}= \frac{K&#39;-K}{K}-\frac{N&#39;-N}{N}=0
+\]</span> which is an improvement compared to the basic Solow Growth Model.</p>
+<p>On the other hand, we <em>still have NO GROWTH in GDP per person</em> as <span class="math inline">\(y=f(k)\)</span>​ is a function purely relying on <span class="math inline">\(k\)</span>​. Again, growth occurs only during adjustment to the steady rate.</p>
+<p>We still need to add more variations under the framework, here comes the Solow Growth Model with Technology growth.</p>
+<h2 id="solow-growth-model-with-technology-growth">Solow Growth Model with Technology Growth</h2>
+<p>Roughly speaking, technology enables higher-level production without needing extra labor or capital. Considering a production function <span class="math inline">\(Y=F(K,N)\)</span>​​, adding more labor or capital just affects the input of the production function, but the technology improvement can directly change the production function itself.</p>
+<p>Let <span class="math inline">\(A\)</span> denote the state of technology, and <span class="math inline">\(g=\frac{A&#39;-A}{A}\)</span>​ be the technology growth rate. There are three types of <strong>technology progress</strong>:</p>
+<ul>
+<li>Hicks Neutral: <span class="math inline">\(Y=AF(K,N)\)</span></li>
+<li>Labor-Augmenting: <span class="math inline">\(Y=F(K,AN)\)</span></li>
+<li>Capital-Augmenting: <span class="math inline">\(Y=F(AK,N)\)</span>​</li>
+</ul>
+<p>The Solow Model considers Labor-Augmenting technology progress <span class="math inline">\(Y=F(K,AN)\)</span>, so we have <span class="math inline">\(y=f(k,A)\)</span>.</p>
+<p>Rather than "per person" argument, we define <strong>output per "effective unit of labor"</strong> and <strong>capital per "effective unit of labor"</strong> by <span class="math display">\[
+\widetilde{y}=\frac{Y}{AN},\ \widetilde{k}=\frac{K}{AN}
+\]</span> Therefore, <span class="math display">\[
+\begin{aligned}
+\frac{\widetilde{k}&#39;-\widetilde{k}}{\widetilde{k}}&amp;= \frac{K&#39;-K}{K}-\frac{A&#39;-A}{A}-\frac{N&#39;-N}{N}\\
+\Rightarrow \widetilde{k}&#39;-\widetilde{k}&amp;= \widetilde{k}(\frac{sY-dK}{K}-g-n)\\
+\Rightarrow \widetilde{k}&#39;-\widetilde{k}&amp;= sf(\widetilde{k})-(d+g+n)\widetilde{k}
+\end{aligned}
+\]</span></p>
+<p>The last equation refers to the new <em>Capital Evolution Equation</em>.</p>
+<figure>
+<img src="https://raw.githubusercontent.com/lonely-cloud/cloudImage/main/img/202109130045655.png" alt="Equilibrium of Solow Model with technology growth" /><figcaption aria-hidden="true">Equilibrium of Solow Model with technology growth</figcaption>
+</figure>
+<p>Analyzing the equilibrium, at the steady rate <span class="math inline">\(\widetilde{k}=\widetilde{k}&#39;=\widetilde{k}^{*}\)</span>: <span class="math display">\[
+sf(\widetilde{k}^*)=(d+g+n)\widetilde{k}^*
+\]</span> Given the above equation, we can easily tell that the capital <em>per effective worker</em> <span class="math inline">\(\widetilde{k}\)</span>​​ and the output <em>per effective worker</em> <span class="math inline">\(\widetilde{y}\)</span>​​ <strong>DO NOT grow</strong> as <span class="math inline">\(\widetilde{y}=f(\widetilde{k},A)\)</span>​​. However, if technology grows, the capital <em>per worker</em> <span class="math inline">\(k\)</span>​​ and the output <em>per worker</em> <span class="math inline">\(y\)</span>​​​​​​​ <strong>DO grow</strong> (both at the rate of technology growth).</p>
+<p>Verification: Given <span class="math display">\[
+\widetilde{k}=\frac{K}{AN}=\frac{k}{A}\\
+\widetilde{y}=\frac{Y}{AN}=\frac{y}{A}\\
+\]</span> Under equilibrium, <span class="math display">\[
+0=\frac{\widetilde{k}&#39;-\widetilde{k}}{\widetilde{k}}= \frac{k&#39;-k}{k}-\frac{A&#39;-A}{A}\Rightarrow \frac{k&#39;-k}{k}=g\\
+0=\frac{\widetilde{y}&#39;-\widetilde{y}}{\widetilde{y}}= \frac{y&#39;-y}{y}-\frac{A&#39;-A}{A}\Rightarrow \frac{y&#39;-y}{y}=g
+\]</span></p>
+<p>This is consistent with <em>Kaldor's Stylized Fact</em></p>
+<ul>
+<li>Income per capita ( <span class="math inline">\(Y/N\)</span> ) and capital per capita ( <span class="math inline">\(K/N\)</span> ) grows at constant rates.</li>
+</ul>
+<p>It is a revolutionary breakthrough because we ultimately observe "economic growth".</p>
+<h2 id="evaluation-of-solow-model">Evaluation of Solow Model</h2>
+<p>Since we are so interested in <em>Kaldor's Stylized Fact</em>, we evaluate our 3 models</p>
+<ul>
+<li>M1: Basic Solow Model</li>
+<li>M2: Solow Model with Population Growth</li>
+<li>M1: Solow Model with Population Growth &amp; Technology Growth</li>
+</ul>
+<p>under the framework of 5 Kaldor's Stylized Fact.</p>
+<ol type="1">
+<li><p>Income per unit capital ( <span class="math inline">\(Y/K\)</span>​​ ​​) does not change.</p>
+<p>This is equivalent to say, <span class="math inline">\(Y,K\)</span> grow at the same rate.</p>
+<ul>
+<li>M1 (<span class="math inline">\(\checkmark\)</span>): <span class="math inline">\(\frac{K&#39;-K}{K}=\frac{Y&#39;-Y}{Y}=0\)</span></li>
+<li>M2 (<span class="math inline">\(\checkmark\)</span>): <span class="math inline">\(\frac{K&#39;-K}{K}=\frac{Y&#39;-Y}{Y}=n\)</span>​</li>
+<li>M3 (<span class="math inline">\(\checkmark\)</span>​): <span class="math inline">\(\frac{K&#39;-K}{K}=\frac{Y&#39;-Y}{Y}=n+g\)</span>​</li>
+</ul></li>
+<li><p>Income per capita ( <span class="math inline">\(Y/N\)</span>​ ) and capital per capita ( <span class="math inline">\(K/N\)</span>​ ) grows at constant rates.</p>
+<ul>
+<li>M1 and M2 (<span class="math inline">\(\cross\)</span>): <span class="math inline">\(\frac{y&#39;-y}{y}=\frac{k&#39;-k}{k}=0\)</span></li>
+<li>M3 (<span class="math inline">\(\checkmark\)</span>): <span class="math inline">\(\frac{y&#39;-y}{y}=\frac{k&#39;-k}{k}=g\)</span></li>
+</ul></li>
+<li><p>Rental price of capital ( <span class="math inline">\(r\)</span>​​ ) is constant.</p>
+<ul>
+<li>M1 and M2 and M3 (<span class="math inline">\(\checkmark\)</span>​)</li>
+</ul>
+<p>Here we consider a special case: assume the production function is in a <strong>Cobb-Douglas</strong> form <span class="math display">\[
+Y=K^{\alpha}(AN)^{1-\alpha}
+\]</span> Then the economy's profit function is <span class="math display">\[
+\pi=Y-wN-rK-dK=K^{\alpha}(AN)^{1-\alpha}-wN-rK-dK
+\]</span> Choose <span class="math inline">\(K,N\)</span> to maximize <span class="math inline">\(\pi\)</span>: <span class="math display">\[
+\frac{\partial \pi}{\partial K}=\alpha K^{\alpha-1}(AN)^{1-\alpha}-r-d=0\ \ \ \ (1)\\
+\frac{\partial \pi}{\partial N}=A(1-\alpha) K^{\alpha-1}(AN)^{-\alpha}-w=0\ \ \ \ (2)
+\]</span> From (1), <span class="math display">\[
+r=\alpha K^{\alpha-1}(AN)^{1-\alpha}-d=\alpha\widetilde{k}^{\alpha-1}-d
+\]</span> Since <span class="math inline">\(\widetilde{k}\)</span>​ does not change, <span class="math inline">\(r\)</span> is constant.</p></li>
+<li><p>Wages ( <span class="math inline">\(w\)</span>​​​ ) grows at a constant rate.</p>
+<p>From (2), <span class="math display">\[
+w=A(1-\alpha) K^{\alpha-1}(AN)^{-\alpha}=A(1-\alpha)\widetilde{k}^{\alpha}
+\]</span> Since <span class="math inline">\(\widetilde{k}\)</span> does not change, <span class="math display">\[
+\frac{w&#39;-w}{w}=\frac{A&#39;-A}{A}=g
+\]</span></p>
+<ul>
+<li>M1 and M2 (<span class="math inline">\(\cross\)</span>​​): <span class="math inline">\(\frac{w&#39;-w}{w}=0\)</span>​​​</li>
+<li>M3 (<span class="math inline">\(\checkmark\)</span>): <span class="math inline">\(\frac{w&#39;-w}{w}=g\)</span></li>
+</ul></li>
+<li><p>Rates of growth and level of income vary substantially across countries (non-convergence).</p>
+<ul>
+<li>M1 and M2 and M3 (<span class="math inline">\(\cross\)</span>): the models predict that all countries should have the same long-run growth rate, <span class="math inline">\(g\)</span>, which is inconsistent with what we observe in reality.</li>
+</ul></li>
+</ol>
+<p>Given our starting point to satisfy <em>Kaldor's Stylized Facts</em>, Solow Model can explain many Stylized Facts of economic growth. In particular, Solow Model with Population Growth &amp; Technology Growth can interpret 4 Kaldor's facts out of the 5.</p>
+<p>For the term <strong>"economic growth"</strong>, Solow predicts <strong>Growth rate of GDP per capita = Growth rate of Technology</strong>, i.e. <span class="math display">\[
+\frac{y&#39;-y}{y}=g
+\]</span> But how does the growth rate of technology be determined? This is not explained in Solow Model. In other words, the growth rate of technology, <span class="math inline">\(g\)</span>​, is an exogenously given value that we cannot formulate from Solow Model itself. This is the reason why we refer Solow Model as an <strong>exogenous growth model</strong> -- a starting port to analyze economic growth. Of course, there would be some <strong>endogenous growth models </strong> (e.g. <em>Romer One-Sector Model, Lucas Two-Sector Model, Romer Two-Sector Model</em>), but all of them should credit their work to Solow.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Economics/" rel="tag"><i class="fa fa-tag"></i> Economics</a>
+              <a href="/tags/Macroeconomics/" rel="tag"><i class="fa fa-tag"></i> Macroeconomics</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/28/cezanne/" rel="prev" title="塞尚：永恒的真实">
+      <i class="fa fa-chevron-left"></i> 塞尚：永恒的真实
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#setup-of-classical-macroeconomics"><span class="nav-number">1.</span> <span class="nav-text">Setup of Classical Macroeconomics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#basic-solow-growth-model"><span class="nav-number">2.</span> <span class="nav-text">Basic Solow Growth Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solow-growth-model-with-population-growth"><span class="nav-number">3.</span> <span class="nav-text">Solow Growth Model with Population Growth</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solow-growth-model-with-technology-growth"><span class="nav-number">4.</span> <span class="nav-text">Solow Growth Model with Technology Growth</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#evaluation-of-solow-model"><span class="nav-number">5.</span> <span class="nav-text">Evaluation of Solow Model</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Chenxin Jiang"
+      src="/images/avatar.JPG">
+  <p class="site-author-name" itemprop="name">Chenxin Jiang</p>
+  <div class="site-description" itemprop="description">I Wandered Lonely as a Cloud.<br>霭霭停云，濛濛时雨。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:jiangchenxin0207@gmail.com" title="E-Mail → mailto:jiangchenxin0207@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fas fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chenxin Jiang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="Symbols count total">46k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">42 mins.</span>
+</div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60a54da67c98630c" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'c766098da966c4b150d1# GitHub Application Client ID',
+      clientSecret: '14af784278e14e7c1b1a72fe82903400cda8d0f0# GitHub Application Client Secret',
+      repo        : 'chenxin-meow.github.io# Repository name to store issues',
+      owner       : 'chenxin-meow# GitHub repo owner',
+      admin       : ['chenxin-meow# GitHub repo owner and collaborators, only these guys can initialize gitHub issues'],
+      id          : '1d94c53d756d132df42fbdc28bbdccf6',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+    </div>
+</body>
+</html>
