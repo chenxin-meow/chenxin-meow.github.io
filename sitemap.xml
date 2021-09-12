@@ -88,6 +88,34 @@
 
   
   <url>
+    <loc>http://chenxin-meow.github.io/tags/%E5%8E%86%E5%8F%B2/</loc>
+    <lastmod>2021-09-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://chenxin-meow.github.io/tags/%E6%88%98%E4%BA%89/</loc>
+    <lastmod>2021-09-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://chenxin-meow.github.io/tags/%E6%94%BF%E6%B2%BB/</loc>
+    <lastmod>2021-09-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://chenxin-meow.github.io/tags/%E5%8F%8D%E4%B9%8C%E6%89%98%E9%82%A6/</loc>
+    <lastmod>2021-09-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://chenxin-meow.github.io/tags/Machine-Learning/</loc>
     <lastmod>2021-09-12</lastmod>
     <changefreq>daily</changefreq>
@@ -102,56 +130,7 @@
   </url>
   
   <url>
-    <loc>http://chenxin-meow.github.io/tags/%E5%93%B2%E5%AD%A6/</loc>
-    <lastmod>2021-09-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://chenxin-meow.github.io/tags/%E5%8E%86%E5%8F%B2/</loc>
-    <lastmod>2021-09-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://chenxin-meow.github.io/tags/%E6%94%BF%E6%B2%BB/</loc>
-    <lastmod>2021-09-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://chenxin-meow.github.io/tags/%E8%89%BA%E6%9C%AF/</loc>
-    <lastmod>2021-09-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://chenxin-meow.github.io/tags/Mathematics/</loc>
-    <lastmod>2021-09-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://chenxin-meow.github.io/tags/%E5%8F%8D%E4%B9%8C%E6%89%98%E9%82%A6/</loc>
-    <lastmod>2021-09-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://chenxin-meow.github.io/tags/%E6%88%98%E4%BA%89/</loc>
-    <lastmod>2021-09-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://chenxin-meow.github.io/tags/%E8%87%AA%E7%94%B1%E4%B8%BB%E4%B9%89/</loc>
     <lastmod>2021-09-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -171,17 +150,31 @@
     <priority>0.6</priority>
   </url>
   
-
-  
   <url>
-    <loc>http://chenxin-meow.github.io/categories/Theory/</loc>
+    <loc>http://chenxin-meow.github.io/tags/%E5%93%B2%E5%AD%A6/</loc>
     <lastmod>2021-09-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://chenxin-meow.github.io/categories/%E9%9A%8F%E7%AC%94/</loc>
+    <loc>http://chenxin-meow.github.io/tags/%E8%87%AA%E7%94%B1%E4%B8%BB%E4%B9%89/</loc>
+    <lastmod>2021-09-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://chenxin-meow.github.io/tags/%E8%89%BA%E6%9C%AF/</loc>
+    <lastmod>2021-09-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>http://chenxin-meow.github.io/categories/%E8%AF%BB%E4%B9%A6/</loc>
     <lastmod>2021-09-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -195,7 +188,14 @@
   </url>
   
   <url>
-    <loc>http://chenxin-meow.github.io/categories/%E8%AF%BB%E4%B9%A6/</loc>
+    <loc>http://chenxin-meow.github.io/categories/Theory/</loc>
+    <lastmod>2021-09-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://chenxin-meow.github.io/categories/%E9%9A%8F%E7%AC%94/</loc>
     <lastmod>2021-09-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
