@@ -774,8 +774,10 @@ Y=K^{\alpha}(AN)^{1-\alpha}
 \pi=Y-wN-rK-dK=K^{\alpha}(AN)^{1-\alpha}-wN-rK-dK
 \]</span> Choose <span class="math inline">\(K,N\)</span> to maximize <span class="math inline">\(\pi\)</span>: <span class="math display">\[
 \frac{\partial \pi}{\partial K}=\alpha K^{\alpha-1}(AN)^{1-\alpha}-r-d=0\ \ \ \ (1)\\
+\]</span> <span class="math display">\[
 \frac{\partial \pi}{\partial N}=A(1-\alpha) K^{\alpha-1}(AN)^{-\alpha}-w=0\ \ \ \ (2)
-\]</span> From (1), <span class="math display">\[
+\]</span></p>
+<p>From (1), <span class="math display">\[
 r=\alpha K^{\alpha-1}(AN)^{1-\alpha}-d=\alpha\widetilde{k}^{\alpha-1}-d
 \]</span> Since <span class="math inline">\(\widetilde{k}\)</span>​ does not change, <span class="math inline">\(r\)</span> is constant.</p></li>
 <li><p>Wages ( <span class="math inline">\(w\)</span>​​​ ) grows at a constant rate.</p>
