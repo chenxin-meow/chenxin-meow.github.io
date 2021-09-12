@@ -733,7 +733,9 @@ sf(\widetilde{k}^*)=(d+g+n)\widetilde{k}^*
 \widetilde{k}=\frac{K}{AN}=\frac{k}{A}\\
 \widetilde{y}=\frac{Y}{AN}=\frac{y}{A}\\
 \]</span> Under equilibrium, <span class="math display">\[
-0=\frac{\widetilde{k}&#39;-\widetilde{k}}{\widetilde{k}}= \frac{k&#39;-k}{k}-\frac{A&#39;-A}{A}\Rightarrow \frac{k&#39;-k}{k}=g\\
+0=\frac{\widetilde{k}&#39;-\widetilde{k}}{\widetilde{k}}= \frac{k&#39;-k}{k}-\frac{A&#39;-A}{A}\Rightarrow \frac{k&#39;-k}{k}=g
+\]</span></p>
+<p><span class="math display">\[
 0=\frac{\widetilde{y}&#39;-\widetilde{y}}{\widetilde{y}}= \frac{y&#39;-y}{y}-\frac{A&#39;-A}{A}\Rightarrow \frac{y&#39;-y}{y}=g
 \]</span></p>
 <p>This is consistent with <em>Kaldor's Stylized Fact</em></p>
@@ -759,7 +761,7 @@ sf(\widetilde{k}^*)=(d+g+n)\widetilde{k}^*
 </ul></li>
 <li><p>Income per capita ( <span class="math inline">\(Y/N\)</span>​ ) and capital per capita ( <span class="math inline">\(K/N\)</span>​ ) grows at constant rates.</p>
 <ul>
-<li>M1 and M2 (<span class="math inline">\(\cross\)</span>): <span class="math inline">\(\frac{y&#39;-y}{y}=\frac{k&#39;-k}{k}=0\)</span></li>
+<li>M1 and M2 (✘): <span class="math inline">\(\frac{y&#39;-y}{y}=\frac{k&#39;-k}{k}=0\)</span></li>
 <li>M3 (<span class="math inline">\(\checkmark\)</span>): <span class="math inline">\(\frac{y&#39;-y}{y}=\frac{k&#39;-k}{k}=g\)</span></li>
 </ul></li>
 <li><p>Rental price of capital ( <span class="math inline">\(r\)</span>​​ ) is constant.</p>
@@ -783,12 +785,12 @@ w=A(1-\alpha) K^{\alpha-1}(AN)^{-\alpha}=A(1-\alpha)\widetilde{k}^{\alpha}
 \frac{w&#39;-w}{w}=\frac{A&#39;-A}{A}=g
 \]</span></p>
 <ul>
-<li>M1 and M2 (<span class="math inline">\(\cross\)</span>​​): <span class="math inline">\(\frac{w&#39;-w}{w}=0\)</span>​​​</li>
+<li>M1 and M2 (✘): <span class="math inline">\(\frac{w&#39;-w}{w}=0\)</span></li>
 <li>M3 (<span class="math inline">\(\checkmark\)</span>): <span class="math inline">\(\frac{w&#39;-w}{w}=g\)</span></li>
 </ul></li>
 <li><p>Rates of growth and level of income vary substantially across countries (non-convergence).</p>
 <ul>
-<li>M1 and M2 and M3 (<span class="math inline">\(\cross\)</span>): the models predict that all countries should have the same long-run growth rate, <span class="math inline">\(g\)</span>, which is inconsistent with what we observe in reality.</li>
+<li>M1 and M2 and M3 (✘): the models predict that all countries should have the same long-run growth rate, <span class="math inline">\(g\)</span>, which is inconsistent with what we observe in reality.</li>
 </ul></li>
 </ol>
 <p>Given our starting point to satisfy <em>Kaldor's Stylized Facts</em>, Solow Model can explain many Stylized Facts of economic growth. In particular, Solow Model with Population Growth &amp; Technology Growth can interpret 4 Kaldor's facts out of the 5.</p>
