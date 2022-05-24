@@ -6,7 +6,7 @@
   <link href="http://chenxin-meow.github.io/atom.xml" rel="self"/>
   
   <link href="http://chenxin-meow.github.io/"/>
-  <updated>2022-05-24T22:32:42.756Z</updated>
+  <updated>2022-05-24T23:57:51.712Z</updated>
   <id>http://chenxin-meow.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://chenxin-meow.github.io/2022/05/25/waiting%20for%20the%20dawn/"/>
     <id>http://chenxin-meow.github.io/2022/05/25/waiting%20for%20the%20dawn/</id>
     <published>2022-05-24T22:32:42.687Z</published>
-    <updated>2022-05-24T22:32:42.756Z</updated>
+    <updated>2022-05-24T23:57:51.712Z</updated>
     
     <content type="html"><![CDATA[<blockquote class="blockquote-center">            <i class="fa fa-quote-left"></i>            <p>日入地中，明夷之象施之於人事，闇主在上，明臣在下，不敢顯其明志，亦明夷之義也。</p>            <i class="fa fa-quote-right"></i>          </blockquote><p>1912年，置身中國封建社會分崩離析的前夜，回顧這千年來君權的得失——我遺憾黃宗羲的社會理想終成泡影。</p><p>自秦漢以降，中國封建社會的君權如同一個不斷膨脹的氣球。從三省六部到三公九卿，從藩鎮割據到士大夫政治，從內閣與司禮監再到軍機處，一切改革的過程都是君權擴張的進程。終於，皇帝乾綱獨斷，大臣以稱奴才為榮，君權登峰造極。可惜，這氣球一戳就破。</p><p>這讓我不禁發問：君權的擴大，是好還是壞？</p><p>若是在堯舜的年代，或許是一件好事。黃梨洲認為，三代以前的原君，是一個“公天下”的人——他棄置人類有生之初的自私自利，以天下公利公害為己任（《原君》）。這樣的一個聖君，從某種程度上來說，其權力越大，百姓就越幸福。</p><p>但是君主“私天下”之始，使君權的擴張成為惡夢。三代以後的君主本末倒置，以為“天下之利害之權皆出於我”。於是利歸於己而害歸於人，天下從此成為皇帝的私家產業。（《原君》）而隨著歷史的演進，君權自然會一步步強化——畢竟，聰慧的君主總能吸取前朝君權失落的教訓，從而為自己的產業打好地基。這時，君權的膨脹意味著君主私利的膨脹，而真正的公利早被遺忘。</p><p>黃梨洲意識到了君權擴張的危害，並且旗幟鮮明地提出，君權應該受到限制。朝堂之上，君權被相權制約。君與臣共治天下，二者無身分尊卑之差，只是共“曳木之人”而已（《原臣》）。臣子出仕不為君主之一姓，而為天下之萬民。因此，若君主以個人私利為政，以天下公利為綱的臣子有足夠的理由反對。朝堂以外，君權被學校制約。天下是非不由天子定奪，而自有學校來公議論斷（《學校》）。由此，君主也不敢隨心所欲地以個人好惡行事，朝廷決議也不再是金科玉律。總之，每當君權偏離原君之旨之時，總需一股力量來制衡失控的君權，從而讓社會回到正常的軌道。</p><p>《明夷待訪錄》中的理論在古代中國可稱振聾發聵，可惜這些理論永遠等待不到尋訪的君王。聖君自是不必尋訪，而三代以後的君主，既已各為私利，又何須尋訪？而我的疑問是，世上真的存在堯舜那樣的聖君嗎？歷史語焉不詳，沒有給我們提供任何證據。我認為堯舜只是古人的美好想像，只要君主還是人，就不可能完全放棄自私自利，聖君一詞只是人們的美好期許。而君權本為民授，若無聖君的許諾，民眾並不需要一個只謀私利的君主來統領，那麼君權本身又從何說起？</p><p>在晦暗的封建時代，談論限制君權云云永遠只是帶著鐐銬跳舞。破，而後立——掙脫鐐銬的方式，是讓君權本身成為過去時。</p>]]></content>
     
@@ -40,7 +40,9 @@
     
     <category term="历史" scheme="http://chenxin-meow.github.io/tags/%E5%8E%86%E5%8F%B2/"/>
     
-    <category term="哲学，政治" scheme="http://chenxin-meow.github.io/tags/%E5%93%B2%E5%AD%A6%EF%BC%8C%E6%94%BF%E6%B2%BB/"/>
+    <category term="政治" scheme="http://chenxin-meow.github.io/tags/%E6%94%BF%E6%B2%BB/"/>
+    
+    <category term="哲学" scheme="http://chenxin-meow.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
     
   </entry>
   
@@ -140,9 +142,9 @@ E=C+I+G+(X-M)
     <category term="随笔" scheme="http://chenxin-meow.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-    <category term="艺术" scheme="http://chenxin-meow.github.io/tags/%E8%89%BA%E6%9C%AF/"/>
-    
     <category term="哲学" scheme="http://chenxin-meow.github.io/tags/%E5%93%B2%E5%AD%A6/"/>
+    
+    <category term="艺术" scheme="http://chenxin-meow.github.io/tags/%E8%89%BA%E6%9C%AF/"/>
     
   </entry>
   
@@ -233,9 +235,9 @@ E=C+I+G+(X-M)
     <category term="Theory" scheme="http://chenxin-meow.github.io/categories/Theory/"/>
     
     
-    <category term="Machine Learning" scheme="http://chenxin-meow.github.io/tags/Machine-Learning/"/>
-    
     <category term="Economics" scheme="http://chenxin-meow.github.io/tags/Economics/"/>
+    
+    <category term="Machine Learning" scheme="http://chenxin-meow.github.io/tags/Machine-Learning/"/>
     
     <category term="Mathematics" scheme="http://chenxin-meow.github.io/tags/Mathematics/"/>
     
